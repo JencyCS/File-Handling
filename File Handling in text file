@@ -1,0 +1,36 @@
+#create file
+file = open('FYCS.txt','x')
+file.close()
+
+#Write file
+file = open('FYCS.txt','w')
+file.write("Hello FYCS!!\n")
+file.write("Data is written")
+file.close()
+
+#Append file
+file = open('FYCS.txt', 'a')
+file.write("\nData is added")
+file.close()
+
+#Read file
+file = open('FYCS.txt', 'r')
+for data in file:
+    print (data)
+
+#Read file including line and space 
+with open("FYCS.txt", "r") as file:
+    for line in file:
+        print(line, end='')
+
+#Read file by spliting the data
+with open("FYCS.txt", "r") as file:
+    for line in file:
+        word = line.split()
+        print (word)
+
+
+#Delete file
+import os
+os.remove("FYCS.txt")
+print("File deleted successfully")
