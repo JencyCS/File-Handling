@@ -1,0 +1,24 @@
+#Create and Write file
+data = b'\x48\x69'  # Example binary data
+
+with open('file.bin', 'wb') as file:
+    file.write(data)
+
+#Read file
+with open('file.bin', 'rb') as file:
+    # Read the binary data from the file
+    data = file.read()
+
+# Print the binary data
+print(data)
+
+#Append file
+data_to_append = b'\x46\x59\x43\x53'
+
+with open('file.bin', 'ab') as file:
+    file.write(data_to_append)
+
+#Delete file
+import os
+
+os.remove('file.bin')
