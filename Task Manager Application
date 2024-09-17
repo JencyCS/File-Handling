@@ -1,0 +1,106 @@
+import os
+
+# Function to display the title
+def display_title():
+    print("\n" + "="*40)
+    print(" "*10 + "Task Manager")
+    print("="*40 + "\n")
+
+# Function to add a new task
+def add_task(file_name):
+    description = input("Enter task description: ")
+    
+    with open(file_name, 'a') as file:
+        file.write(f"{description}\n")
+    print("Task added successfully!")
+
+# Function to view all tasks
+def view_tasks(file_name):
+    if os.path.exists(file_name):
+        with open(file_name, 'r') as file:
+            tasks = file.readlines()
+            if tasks:
+                for i, task in enumerate(tasks, 1):
+                    description = task.strip()
+                    print(f"{i}. Description: {description}")
+            else:
+                print("No tasks available.")
+    else:
+        print("No tasks file found.")
+
+# Function to update an existing task
+def update_task(file_name):
+    view_tasks(file_name)
+    task_number = int(input("Enter the task number to update: "))
+    
+    if os.path.exists(file_name):
+        with open(file_name, 'r') as file:
+            tasks = file.readlines()
+        
+        if 0 < task_number <= len(tasks):
+            description = input("Enter new task description: ")
+            tasks[task_number - 1] = f"{description}\n"
+            
+            with open(file_name, 'w') as file:
+                file.writelines(tasks)
+            
+            print("Task updated successfully!")
+        else:
+            print("Invalid task number.")
+
+# Function to delete a task
+def delete_task(file_name):
+    view_tasks(file_name)
+    task_number = int(input("Enter the task number to delete: "))
+    
+    if os.path.exists(file_name):
+        with open(file_name, 'r') as file:
+            tasks = file.readlines()
+        
+        if 0 < task_number <= len(tasks):
+            tasks.pop(task_number - 1)
+            
+            with open(file_name, 'w') as file:
+                file.writelines(tasks)
+            
+            print("Task deleted successfully!")
+        else:
+            print("Invalid task number.")
+
+# Main function to display the menu and handle user input
+def main():
+    display_title()
+    
+    file_name = input("Enter the file name (with .txt extension) to store tasks: ")
+    
+    if not os.path.exists(file_name):
+        with open(file_name, 'w') as file:
+            pass
+        print(f"File '{file_name}' created successfully!")
+    
+    while True:
+        display_title()
+        print("1. Add Task")
+        print("2. View Tasks")
+        print("3. Update Task")
+        print("4. Delete Task")
+        print("5. Exit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            add_task(file_name)
+        elif choice == '2':
+            view_tasks(file_name)
+        elif choice == '3':
+            update_task(file_name)
+        elif choice == '4':
+            delete_task(file_name)
+        elif choice == '5':
+            print("Exiting Task Manager.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
